@@ -17,4 +17,6 @@ Implementation phase ongoing. As of now, at `Mono8` - `IPL_DEPTH_8U` phase.
     - [ ] Contrast, Brightness, etc.
 - [ ] Image ROI 
 - [ ] Binning
+- [ ] Add Numpy::NDArray support
+- [ ] Link with Boost.Python and Boost.Numpy
 - [ ] Examples
