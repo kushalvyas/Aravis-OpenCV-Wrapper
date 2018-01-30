@@ -61,6 +61,14 @@ void Camera::setProperties(std::string property_name, double property_value){
     return ;
 }
 
+void Camera::setTrigger(bool val){
+    issetTrigger = val;
+    if(val){
+        arv_camera_set_acquisition_mode(camera, ARV_ACQUISITION_MODE_SINGLE_FRAME);
+        arv_camera_set_trigger(camera, "Line1");
+    }
+}
+
 void Camera::start_video(int buffer_queue_size){
     
     std::cout << "ARV Camera Check " << camera << std::endl;
@@ -72,6 +80,10 @@ void Camera::start_video(int buffer_queue_size){
         return;
     }
     gint payload =   arv_camera_get_payload(camera);
+    if(issetTrigger){
+        buffer_queue_size = 1;
+        arv_camera_set_acquisition_mode(camera, ARV_ACQUISITION_MODE_SINGLE_FRAME);
+    }
     for(int i=0; i < buffer_queue_size; i++){
         arv_stream_push_buffer(stream, arv_buffer_new(payload, NULL));
     }

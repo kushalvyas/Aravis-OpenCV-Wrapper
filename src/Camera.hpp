@@ -16,6 +16,7 @@ public:
 	cv::Mat readFrameMat();
 	void disconnect();
 	void start_video(int buffer_queue_size=50);
+	void setTrigger(bool val);
 	
 private:
 	
@@ -23,6 +24,7 @@ private:
 	ArvStream *stream = NULL;
 	ArvBuffer *buffer = NULL;
 	void* framebuffer;
+	bool issetTrigger = false;
 
 	//ArvBuffer *acquire();
 	ArvBuffer* readFrame();
