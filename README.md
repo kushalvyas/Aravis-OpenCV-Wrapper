@@ -15,6 +15,8 @@ Implementation phase ongoing. As of now, at `Mono8` - `IPL_DEPTH_8U` phase.
 - [x] Set GigE Camera Properties (will keep adding to list)
     - [x] FPS, Gain, Exposure Time
     - [ ] Contrast, Brightness, etc.
+- [x] Hardware Trigger  (3.3V - 24V For Imaging Source GigE camera)
+- [ ] Software Trigger
 - [ ] Image ROI 
 - [ ] Binning
 - [ ] Add Numpy::NDArray support
