@@ -23,6 +23,7 @@ private:
 	ArvCamera *camera = NULL;
 	ArvStream *stream = NULL;
 	ArvBuffer *buffer = NULL;
+	ArvBuffer *_buffer = NULL;
 	void* framebuffer;
 	bool issetTrigger = false;
 
