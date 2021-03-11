@@ -4,7 +4,7 @@ Camera::Camera(bool automode){
 
     arv_g_type_init();
     // captures NULL env camera. if fake-enabled captures Aravis-GV01 (running at 127.0.0.1)
-    camera = arv_camera_new(NULL);
+    camera = arv_camera_new(NULL, &error);
     if(camera != NULL){
         std::cout << "Initialized ArvCamera@"<<camera << std::endl;
         std::cout << "AUTO Prop Mode : " << automode << std::endl;
@@ -29,7 +29,7 @@ Camera::Camera(std::string camera_id, bool automode){
     */
     
     arv_g_type_init();
-    camera = arv_camera_new(camera_id.c_str());
+    camera = arv_camera_new(camera_id.c_str(), &error);
     if(camera != NULL){
         std::cout << "Initialized ArvCamera@"<<camera << std::endl;
         std::cout << "AUTO Prop Mode : " << automode << std::endl;
@@ -44,19 +44,19 @@ Camera::Camera(std::string camera_id, bool automode){
 
 void Camera::disable_auto(){
     printf("Disable Auto Property\n");
-    arv_camera_set_exposure_time_auto(camera, ARV_AUTO_OFF);
-    arv_camera_set_gain_auto(camera, ARV_AUTO_OFF);
+    arv_camera_set_exposure_time_auto(camera, ARV_AUTO_OFF, &error);
+    arv_camera_set_gain_auto(camera, ARV_AUTO_OFF, &error);
 
     // write support for other properties
 }
 
 void Camera::setProperties(std::string property_name, double property_value){
     if(property_name == "GAIN"){
-        arv_camera_set_gain(camera, property_value);
+        arv_camera_set_gain(camera, property_value, &error);
     }else if(property_name == "EXP_TIME"){
-        arv_camera_set_exposure_time(camera, property_value);
+        arv_camera_set_exposure_time(camera, property_value, &error);
     }else if(property_name == "FPS"){
-        arv_camera_set_frame_rate(camera, property_value);
+        arv_camera_set_frame_rate(camera, property_value, &error);
     }
     return ;
 }
@@ -64,28 +64,28 @@ void Camera::setProperties(std::string property_name, double property_value){
 void Camera::setTrigger(bool val){
     issetTrigger = val;
     if(val){
-        arv_camera_set_trigger(camera, "Line1");
+        arv_camera_set_trigger(camera, "Line1", &error);
     }
 }
 
 void Camera::start_video(int buffer_queue_size){
     
     std::cout << "ARV Camera Check " << camera << std::endl;
-    stream = arv_camera_create_stream(camera, NULL, NULL);
+    stream = arv_camera_create_stream(camera, NULL, NULL, &error);
     std::cout << "ARVSTREAM stream created at "<< stream << std::endl;
     std::cout << "Buffer Queue Size set at " << buffer_queue_size << std::endl;
     if( stream == NULL){
         printf("STREAM CREATION ERROR.\n");
         return;
     }
-    gint payload =   arv_camera_get_payload(camera);
+    gint payload =   arv_camera_get_payload(camera, &error);
     if(issetTrigger){
         buffer_queue_size = 1;
     }
     for(int i=0; i < buffer_queue_size; i++){
         arv_stream_push_buffer(stream, arv_buffer_new(payload, NULL));
     }
-    arv_camera_start_acquisition(camera);
+    arv_camera_start_acquisition(camera, &error);
 
     usleep(1);
 
@@ -144,6 +144,6 @@ cv::Mat Camera::readFrameMat(){
 
 
 void Camera::disconnect(){
-    arv_camera_stop_acquisition(camera);
+    arv_camera_stop_acquisition(camera, &error);
 
 }
