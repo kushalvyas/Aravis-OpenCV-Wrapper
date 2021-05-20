@@ -8,11 +8,13 @@ int main(int argc, char *argv[]){
     cam.setProperties("FPS", 30);
     cam.start_video();
     while(true){
-        IplImage* image;
-        image = cam.readFrameIPL();
-        cvShowImage("Image", image);
-        int keypress = cvWaitKey(1) & 0xFF;
-
+//        IplImage* image;
+//        image = cam.readFrameIPL();
+        cv::Mat image = cam.readFrameMat();
+//        cvShowImage("Image", image);
+//        int keypress = cvWaitKey(1) & 0xFF;
+        cv::imshow("Image", image);
+        int keypress = cv::waitKey(1) & 0xFF;
 
         /***** TO USE WITH OPENCV C++ MAT CONTAINER ****/
 
@@ -28,8 +30,8 @@ int main(int argc, char *argv[]){
         }
     }
 
-    cvDestroyAllWindows();
-    // cv::destroyAllWindows();
+//    cvDestroyAllWindows();
+     cv::destroyAllWindows();
     cam.disconnect();
 
     return 0;
