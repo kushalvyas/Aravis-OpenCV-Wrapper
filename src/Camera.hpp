@@ -24,6 +24,7 @@ private:
 	ArvStream *stream = NULL;
 	ArvBuffer *buffer = NULL;
 	ArvBuffer *_buffer = NULL;
+	GError *error = NULL;
 	void* framebuffer = NULL;
 	bool issetTrigger = false;
 
