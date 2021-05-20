@@ -12,7 +12,7 @@ public:
 	
 	void setProperties(std::string property_name, double property_value);
 	
-	IplImage* readFrameIPL();
+//	IplImage* readFrameIPL();
 	cv::Mat readFrameMat();
 	void disconnect();
 	void start_video(int buffer_queue_size=50);
@@ -24,7 +24,8 @@ private:
 	ArvStream *stream = NULL;
 	ArvBuffer *buffer = NULL;
 	ArvBuffer *_buffer = NULL;
-	void* framebuffer;
+	GError *error = NULL;
+	void* framebuffer = NULL;
 	bool issetTrigger = false;
 
 	//ArvBuffer *acquire();

@@ -8,21 +8,32 @@ int main(int argc, char *argv[]){
     cam.setProperties("FPS", 30);
     cam.setTrigger(true);
     cam.start_video();
-    IplImage* image;
-    cvNamedWindow("Image");
+//    IplImage* image = NULL;
+    cv::Mat image;
+//    cvNamedWindow("Image");
+    cv::namedWindow("Image");
     while(true){
-        image = cam.readFrameIPL();
-        if(image != NULL){
+//        image = cam.readFrameIPL();
+        image = cam.readFrameMat();
+//        if(image != NULL){
+        if(!image.empty()) {
         	// cv::Mat tmp = cv::cvarrToMat(image);
         	// cv::imshow("frame", tmp);
 	        printf("Image Acquired\n");
         }
-        cvShowImage("Image", image);
-        int keypress = cvWaitKey(1) & 0xFF;
+//        cvShowImage("Image", image);
+        cv::imshow("Image", image);
+//        int keypress = cvWaitKey(1) & 0xFF;
+        int keypress = cv::waitKey(1) & 0xFF;
+
+
+        /***** TO USE WITH OPENCV C++ MAT CONTAINER ****/
+
         // cv::Mat m;
         // m = cam.readFrameMat();
         // cv::imshow("frame", m);
         // int keypress = cv::waitKey(1) & 0xFF;
+        
         if(keypress == 27){
             break;
         }else if (keypress == 115){
@@ -30,8 +41,8 @@ int main(int argc, char *argv[]){
         }
     }
 
-    cvDestroyAllWindows();
-    // cv::destroyAllWindows();
+//    cvDestroyAllWindows();
+     cv::destroyAllWindows();
     cam.disconnect();
 
     return 0;
